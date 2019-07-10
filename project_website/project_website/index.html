@@ -1,0 +1,393 @@
+<!DOCTYPE HTML>
+<!--
+	Prologue by HTML5 UP
+	html5up.net | @n33co
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Columbia University EECS E4764 IoT Project Report #7</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+	</head>
+	<body>
+
+		<!-- Header -->
+			<div id="header">
+
+				<div class="top">
+
+					<!-- Logo -->
+						<div id="logo">
+							<!-- <span class="image avatar48"><img src="images/avatar.jpg" alt="" /></span> -->
+							<h1 id="title">Elevator Traffic Monitor</h1>
+							<p>Columbia University <br>
+								EECS E4764 Fall'17 Internet of Things<br>
+								Intelligent and Connected Systems<br>
+								Team 7 Project Report
+							</p>
+						</div>
+
+					<!-- Nav -->
+						<nav id="nav">
+							<!--
+
+								Prologue's nav expects links in one of two formats:
+
+								1. Hash link (scrolls to a different section within the page)
+
+								   <li><a href="#foobar" id="foobar-link" class="icon fa-whatever-icon-you-want skel-layers-ignoreHref"><span class="label">Foobar</span></a></li>
+
+								2. Standard link (sends the user to another page/site)
+
+								   <li><a href="http://foobar.tld" id="foobar-link" class="icon fa-whatever-icon-you-want"><span class="label">Foobar</span></a></li>
+
+							-->
+							<ul>
+								<li><a href="#top" id="top-link" class="skel-layers-ignoreHref"><span class="icon fa-home">Abstract</span></a></li>
+								<li><a href="#motivation" id="motivation-link" class="skel-layers-ignoreHref"><span class="icon fa-th">Motivation</span></a></li>
+								<li><a href="#system" id="system-link" class="skel-layers-ignoreHref"><span class="icon fa-th">System</span></a></li>
+								<li><a href="#results" id="results-link" class="skel-layers-ignoreHref"><span class="icon fa-th">Results</span></a></li>
+								<li><a href="#references" id="references-link" class="skel-layers-ignoreHref"><span class="icon fa-th">References</span></a></li>
+								<li><a href="#team" id="team-link" class="skel-layers-ignoreHref"><span class="icon fa-user">Our Team</span></a></li>
+								<li><a href="#contact" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">Contact</span></a></li>
+							</ul>
+						</nav>
+
+				</div>
+
+				<div class="bottom">
+
+					<!-- Social Icons -->
+						<ul class="icons">
+							<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+							<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+							<li><a href="#" class="icon fa-github"><span class="label">Github</span></a></li>
+							<li><a href="#" class="icon fa-dribbble"><span class="label">Dribbble</span></a></li>
+							<li><a href="#" class="icon fa-envelope"><span class="label">Email</span></a></li>
+						</ul>
+
+				</div>
+
+			</div>
+
+		<!-- Main -->
+			<div id="main">
+
+				<!-- Intro -->
+					<section id="top" class="one dark cover">
+						<div class="container">
+
+								<iframe width="560" height="315" src="https://www.youtube.com/embed/h7D5MUzy4u8" frameborder="0" allowfullscreen></iframe>
+
+								<h2 class="alt">Elevator Traffic Monitor</h2>
+								<p> If you're running late, should you wait for an elevator or take the stairs?</p>
+								<p> Our Elevator Traffic Monitor is a low-cost, adaptable system that collects 
+								and analyzes elevator usage data, and provides feedback in the form of suggestions 
+								to elevator riders. By making this information accessible, we can help elevator-riders 
+								make informed decisions about how to reach their destination faster, and how to avoid 
+								elevator congestion.
+								</p>
+								
+
+							<footer>
+								<a href="#motivation" class="button scrolly">Motivation</a>
+							</footer>
+
+						</div>
+					</section>
+
+				<!-- Portfolio -->
+					<section id="motivation" class="two">
+						<div class="container">
+
+							<header>
+								<h2>Motivation</h2>
+							</header>
+
+							<p align="left">In many buildings, elevator usage data is either inaccessible to elevator-riders,
+							or simply nonexistent due to archaic systems. Often, elevator position indicators are only installed on certain floors. Additionally, 
+							even when this information is available on a floor, it is difficult for an elevator rider to draw 
+							relevant conclusions about their trip. Given an elevator car's position over time, we can 
+							extrapolate information about peak congestion times and make a comparison between travel times via 
+							an elevator versus stairs. A potential elevator-rider can then make an informed decision about 
+							their trip. By informing an elevator rider's decision-making, we can reduce overall elevator 
+							congestion and power consumption. Our system aims to be low-cost and flexible to provide these 
+							benefits to a majority of buildings.
+							</p>
+
+						</div>
+					</section>
+					
+					
+					<section id="system" class="three">
+						<div class="container">
+
+							<header>
+								<h2>System</h2>
+							</header>
+
+							<h3 align="left">Architecture</h3>
+
+							<img src="images/block_diagram.gif" alt="" width=80% />
+
+							<p align="left">The Elevator Traffic Monitor is divided into three sub-systems: data collection, 
+							data analysis, and information distribution. The data collection sub-system consists of a camera 
+							connected to a WiFi enabled microcontroller. This sub-system takes a snapshot of the elevator bank 
+							every 20 seconds (about the time an elevator spends stopped on one floor) and uploads it to a server 
+							setup on a Google Compute Engine instance. The images are timestamped and saved to a folder on the 
+							instance.
+							</p>
+							<p align="left">Next, the data analysis sub-system reads the elevator position from each image using an SVM 
+							that has been trained to recognize a specific type of elevator bank. This position/time value pair is then 
+							inserted into a database. From here, we calculate the average elevator velocity by time of day, and compare 
+							these values to pre-recorded velocities for trips taken via stairs. A table of travel mode suggestions is 
+							created based off of these comparisons. This table is updated with every new data entry.
+							</p>
+							<p align="left">
+							These suggestions are highly dependent on what floor a user is in. To serve relevant, location-dependent information, 
+							we utilize a Physical Web approach. Bluetooth low energy (BLE) beacons broadcast Eddystone-URL frames that contain URLs tied to the floor the 
+							beacon is located. When a user accesses the webpage tied to the beacon nearest them, they receive relevant travel 
+							suggestions from their starting point.
+							</p>
+
+
+							
+							<h3 align="left">Technical Components</h3>
+
+							<p align="left">Data Collection:</br>
+							>WiFi-Enabled Microcontroller - Adafruit Feather HUZZAH ESP8266 Development Board</br>
+							>Camera Module - Arducam OV2640
+							</p>
+							<p align="left">Data Analysis:</br>
+							>Computing Resources - Google Compute Engine</br>
+							>Image Processing - OpenCV</br>
+							>Data Analysis - Python
+							</p>
+							<p align="left">Information Distribution:</br>
+							>Webserver - Apache2 running on a Google Compute Engine Instance</br>
+							>Bluetooth Low Energy (BLE) Beacon - RadBeacon Dot
+							</p>
+
+							
+							<h3 align="left">Prototype</h3>
+
+							<p align="left">Our prototype was assembled on a tri-fold poster board. A simulated elevator indicator was 
+							constructed on the back wall of the poster. The camera was positioned far enough from the back wall to capture 
+							the entire length of the indicator.</p>
+
+							<table width="900" border="0" cellpadding="10">
+							<col width="300">
+							<col width="300">
+							<col width="300">
+
+							<tr>
+
+							<td style= "text-align:center; vertical-align:center">
+							<img src="images/demo_front.gif" alt="Model Elevator Indicator" height="200" width="300" style="vetical-align=middle"/>
+							</br>
+							Model elevator indicator. LEDs are controlled by a simple elevator simulation script running on an Arduino.
+							</td>
+
+
+							<td style="text-align:center; vertical-align:center">
+							<img src="images/esp.gif" alt="Microcontroller Setup" height="200" width="300" style="vetical-align=middle"/>
+							</br>
+							ESP8266 Board connected to camera module positioned to capture the entire elevator indicator.
+							</td>
+
+
+							<td style="text-align:center; vertical-align:center">
+							<img src="images/photos.gif" alt="Photo taken by system" height="200" width="300" style="vetical-align=middle"/>
+							</br>
+							Image taken and uploaded to our server by the ESP8266.
+							</td>
+
+							</tr>
+
+							</table>
+							
+							
+						</div>
+					</section>
+					
+					
+					<section id="results" class="two">
+						<div class="container">
+
+							<header>
+								<h2>Results</h2>
+							</header>
+
+							<table width="900" border="0" cellpadding="5">
+							<col width="450">
+							<col width="450">
+
+							<tr>
+
+							<td align="center" valign="center">
+							<img src="images/prediction_photo.gif" alt="Example Photo" height="350" width="450" style="vetical-align=middle"/>
+							</td>
+
+							<td align="center" valign="center">
+							<img src="images/correct_id.gif" alt="Prediction" height="350" width="450" style="vetical-align=middle"/>
+							</td>
+
+							</tr>
+							</table>
+
+							<p align="left">Our trained SVM model is able to correctly identify the position of an elevator 
+							car from a photo of the elevator bank.</p>
+
+							<table width="900" border="0" cellpadding="5">
+							<col width="450">
+							<col width="450">
+
+							<tr>
+
+							<td align="center" valign="center">
+							<img src="images/ble.gif" alt="BLE Beacon" height="350" width="450" style="vetical-align=middle"/>
+							<br />
+							BLE Beacon broadcasts our project's URL to nearby devices. 
+							</td>
+
+							<td align="center" valign="center">
+							<img src="images/webpage.gif" alt="Webpage" height="350" width="200" style="vetical-align=middle"/>
+							<br />
+							Table of travel suggestions served to users.
+							</td>
+
+							</tr>
+							</table>
+
+							
+							
+						</div>
+					</section>
+					
+					<section id="references" class="three">
+						<div class="container">
+
+							<header>
+								<h2>References</h2>
+							</header>
+
+							<ul>
+							<li><a href="https://learn.adafruit.com/micropython-basics-loading-modules/frozen-modules">Frozen Modules - Adafruit</a></li>
+							<li><a href="https://github.com/namato/micropython-ov2640">Micropython Class for OV2640 Camera</a></li>
+							<li><a href="https://developers.google.com/beacons/">BLE Beacons</a></li>
+							<li><a href="http://scikit-learn.org/stable/modules/svm.html">SVM - Scikit</a></li>
+							<li><a href="https://www.shiyanlou.com/courses/794">SVM Cat Recognizer Lab</a></li>
+							</ul>
+
+						</div>
+					</section>
+					
+
+				<!-- About Me -->
+					<section id="team" class="two">
+						<div class="container">
+
+							<header>
+								<h2>Our Team</h2>
+							</header>
+
+							<!-- <a href="#" class="image featured"><img src="images/pic08.jpg" alt="" /></a> -->
+
+
+							<div class="row">
+								<div class="4u 12u$(mobile)">
+									<article class="item">
+										<a href="#" class="image fit"><img src="images/rui.jpg" alt="" /></a>
+										<header>
+											<h3>Rui Ge</h3>
+											<p>Masters student studying Computer Engineering at Columbia University</br><a href="https://www.linkedin.com/in/rui-ge-045247148/">LinkedIn</a></li></p>
+										</header>
+									</article>
+								</div>
+								<div class="4u 12u$(mobile)">
+									<article class="item">
+										<a href="#" class="image fit"><img src="images/yuekun.jpg" alt="" /></a>
+										<header>
+											<h3>Yuekun Guo</h3>
+											<p>Masters student studying Electrical Engineering at Columbia University </br><a href="https://www.linkedin.com/in/cu-yuekun-guo/">LinkedIn</a></li></p>
+										</header>
+									</article>
+								</div>
+								<div class="4u$ 12u$(mobile)">
+									<article class="item">
+										<a href="#" class="image fit"><img src="images/miguel.png" alt="" /></a>
+										<header>
+											<h3>Miguel Angel Gutierrez</h3>
+											<p>Undergraduate Electrical Engineering student at Columbia University with an emphasis in networking and communications</br> SEAS '18 </br> <a href="https://www.linkedin.com/in/miguel-a-gutierrez/">LinkedIn</a></li></p>
+										</header>
+									</article>
+								</div>
+							</div>
+
+						</div>
+					</section>
+
+				<!-- Contact -->
+					<section id="contact" class="four">
+						<div class="container">
+
+							<header>
+								<h2>Contact</h2>
+							</header>
+
+							<p align="left">
+								<strong>Rui Ge: </strong>rg3105@columbia.edu</br>
+								<strong>Yuekun Guo: </strong>yg2519@columbia.edu</br>
+								<strong>Miguel Angel Gutierrez: </strong>mag2293@columbia.edu</br>
+							</br>
+								<strong>Columbia University </strong><a href="http://www.ee.columbia.edu">Department of Electrical Engineering</a><br>
+								<!-- <strong>Class Website:</strong>
+									<a href="https://edblogs.columbia.edu/eecse4764-001-2016-3/">Columbia University EECS E4764 Fall '17 IoT</a></br> -->
+								<strong>Instructor:</strong> <a href="http://fredjiang.com/">Professsor Xiaofan (Fred) Jiang</a>
+							</p>
+							
+
+							<!-- <form method="post" action="#">
+								<div class="row">
+									<div class="6u 12u$(mobile)"><input type="text" name="name" placeholder="Name" /></div>
+									<div class="6u$ 12u$(mobile)"><input type="text" name="email" placeholder="Email" /></div>
+									<div class="12u$">
+										<textarea name="message" placeholder="Message"></textarea>
+									</div>
+									<div class="12u$">
+										<input type="submit" value="Send Message" />
+									</div>
+								</div>
+							</form> -->
+
+						</div>
+					</section>
+
+			</div>
+
+		<!-- Footer -->
+			<div id="footer">
+
+				<!-- Copyright -->
+					<ul class="copyright">
+						<li>&copy; IoT Project | All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					</ul>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/jquery.scrollzer.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
